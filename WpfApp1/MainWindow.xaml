@@ -7,6 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <ListView ItemsSource="{Binding Metars}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock FontSize="20" FontWeight="ExtraBold" Text="{Binding raw_text }" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Window>

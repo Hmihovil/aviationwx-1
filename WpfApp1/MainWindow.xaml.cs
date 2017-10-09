@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,13 +23,14 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainViewModel mvm = new MainViewModel();
+
         public MainWindow()
         {
             InitializeComponent();
-
+            DataContext = mvm;
             GetData();
         }
-
 
         public void GetData()
         {
@@ -50,13 +52,23 @@ namespace WpfApp1
             {
                 // JToken.ToObject is a helper method that uses JsonSerializer internally
                 var searchResult = result.ToObject<Metar>();
+                mvm.Metars.Add(searchResult);
                 searchResults.Add(searchResult);
             }
         }
     }
 
+    public class MainViewModel
+    {
+        ObservableCollection<Metar> metar = new ObservableCollection<Metar>();
+        public ObservableCollection<Metar> Metars { get; set; } = new ObservableCollection<Metar>();
+    }
+
     public class Metar
     {
         public string station_id { get; set; }
+        public string raw_text { get; set; }
     }
+
+
 }
